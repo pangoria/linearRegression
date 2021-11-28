@@ -23,7 +23,7 @@ library(stats)
 This introduction of 'linearReg' function will use the 'mtcars' data set built 
 into R, which has 32 observations and 11 variables.
 
-```{r, echo=F}
+```{r}
 data=mtcars
 head(mtcars)
 ```
