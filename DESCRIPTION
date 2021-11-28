@@ -1,0 +1,16 @@
+Package: linearReg
+Title: Linear Regression
+Version: 0.0.0.9000
+Authors@R: 
+    person("Andrea", "Pangori", , "pangoria@umich.edu", role = c("aut", "cre"))
+Description: 'linearReg' is used model the relationship between a respose 
+              variable and one or more expalantory variables through estimating
+              regression coefficients. 
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

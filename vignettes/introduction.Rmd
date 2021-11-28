@@ -1,0 +1,74 @@
+---
+title: "Introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(linearReg)
+library(stats)
+```
+
+
+This introduction of 'linearReg' function will use the 'mtcars' data set built 
+into R, which has 32 observations and 11 variables.
+
+```{r, echo=F}
+data=mtcars
+head(mtcars)
+```
+
+To set up before implementation of 'linearReg' function:
+
+Since we need a matrix of the explanatory variables, we will extract the 
+explanatory variables into a matrix and extract a response variable vector. In 
+this example, the explanatory variables of interest will be 'cyl' (number of 
+cylinder), and 'wt' (weight of vehicle) and the responding variable will be 
+'mpg' (Miles/(US) gallon).
+
+```{r}
+##Extract X-> select cyl (column 2) and wt (column 6) variables
+X=as.matrix(mtcars[c("cyl", "wt")])
+
+##Extract y-> mpg (column 1)
+y=as.vector(mtcars["mpg"])
+```
+
+To use the function 'linearReg':
+
+The model of interest is: mpg = B0 + B1*cyl + B2*wt
+
+```{r}
+linearReg(y,X)
+```
+
+In comparison to summary of the 'lm()' function in the stats package:
+
+```{r}
+model=lm(mpg~cyl+wt, data=mtcars)
+summary(model)
+```
+
+The values within both function's outputs appear to be executed with the same 
+amount of precision.
+
+
+To compare the speed between 'linearReg' and 'summary(lm())':
+
+```{r}
+system.time(linearReg(y,X))
+system.time(summary(model))
+```
+
+The 'linearReg' function and 'summary(lm())' function appear to similar 
+efficiency with total system time elapsed to be around 0.001 seconds.
