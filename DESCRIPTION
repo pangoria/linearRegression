@@ -3,6 +3,8 @@ Title: Linear Regression
 Version: 0.0.0.9000
 Authors@R: 
     person("Andrea", "Pangori", , "pangoria@umich.edu", role = c("aut", "cre"))
+Author: Andrea Pangori
+Maintainer: Andrea Pangori <pangoria@umich.edu>
 Description: 'linearReg' is used model the relationship between a respose 
               variable and one or more expalantory variables through estimating
               regression coefficients. 
