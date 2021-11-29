@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(linearRegression)
-library(stats)
 ```
 
 This introduction of 'linearReg' function will use the 'mtcars' data set built 
