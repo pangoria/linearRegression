@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Tutorial"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -71,4 +71,4 @@ system.time(summary(model))
 ```
 
 The 'linearReg' function and 'summary(lm())' function appear to similar 
-efficiency with total system time elapsed to be around 0.001 seconds.
+efficiency with total system time elapsed to be about the same time.
