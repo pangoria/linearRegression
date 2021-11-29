@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "introduction"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction}
@@ -15,10 +15,9 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(linearReg)
+library(linearRegression)
 library(stats)
 ```
-
 
 This introduction of 'linearReg' function will use the 'mtcars' data set built 
 into R, which has 32 observations and 11 variables.
