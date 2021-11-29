@@ -1,13 +1,13 @@
-Package: linearReg
+Package: linearRegression
 Title: Linear Regression
 Version: 0.0.0.9000
 Authors@R: 
     person("Andrea", "Pangori", , "pangoria@umich.edu", role = c("aut", "cre"))
 Author: Andrea Pangori
 Maintainer: Andrea Pangori <pangoria@umich.edu>
-Description: 'linearReg' is used model the relationship between a respose 
-              variable and one or more expalantory variables through estimating
-              regression coefficients. 
+Description: 'linearRegression' is used to model the relationship between a 
+              respose variable and one or more expalantory variables through 
+              estimating regression coefficients. 
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
