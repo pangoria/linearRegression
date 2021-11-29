@@ -52,23 +52,36 @@ The model of interest is: mpg = B0 + B1*cyl + B2*wt
 linearReg(y,X)
 ```
 
+The summary of the 'lm()' function is very similar to 'linearReg' with a 
+few exceptions:
+
+1. 'linearReg' includes 95% Confidence Intervals and the input is a matrix
+    and vector
+2. 'lm()' includes Residual Standard Error and F-statistic information and 
+    the input is a model formula
+
 In comparison to summary of the 'lm()' function in the stats package:
 
 ```{r}
+#original 'lm' function
 model=lm(mpg~cyl+wt, data=mtcars)
 summary(model)
 ```
 
-The values within both function's outputs appear to be executed with the same 
-amount of precision.
+The values that are shared within both function's outputs appear to be executed 
+with the same amount of precision. The 'summary(lm())' function has the same 
+output values as 'linearReg' only the values of the former are rounded to the
+ten-thousandth decimal point.
 
 
-To compare the speed between 'linearReg' and 'summary(lm())':
+To compare the efficiency between 'linearReg' and 'summary(lm())':
 
 ```{r}
 system.time(linearReg(y,X))
 system.time(summary(model))
+
+bench::mark(linearReg(y,X))
+bench::mark(summary(model))
 ```
 
-The 'linearReg' function and 'summary(lm())' function appear to similar 
-efficiency with total system time elapsed to be about the same time.
+The 'linearReg' function and 'summary(lm())' function appear to have similar system time elapses indicating similar efficiency.
