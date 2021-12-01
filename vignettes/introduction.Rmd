@@ -83,7 +83,7 @@ bench::mark(summary(model))
 
 The 'linearReg' function and 'summary(lm())' function appear to have similar 
 system time elapses indicating similar efficiency. 'bench::mark()' isn't the 
-best assessment of efficieny comparison because the 'linearReg' function runs
+best assessment of efficiency comparison because the 'linearReg' function runs
 the linear regression and provides output, while the 'lm()' runs the linear 
-regression and 'summary()' of the 'lm()' is jsut the output and therefore, the 
+regression and 'summary()' of the 'lm()' is just the output and therefore, the 
 'summary(lm())' is expected to be slightly more efficient.

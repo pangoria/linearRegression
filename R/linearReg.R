@@ -84,6 +84,7 @@ linearReg<-function(y, X){
   adj_rsquared= 1-( (SSE/(n-p)) / (SSY/(n-1)) )
 
 
+
   ##REGRESSION MODEL OUTPUT
   output=as.data.frame(cbind(beta_hats, se, t_stats, p_value, ci_95L, ci_95R))
   output=cbind(output, signficance)
@@ -100,6 +101,6 @@ linearReg<-function(y, X){
   rownames(r)<-c("R Squared", "Adjusted R Squared")
   colnames(r)<-c("")
 
-  return(list("Residuals"=resq,"Output"=output, "Signficance Level"= Sig, "R Squared"=r))
-}
+  return(list("Residuals"=resq,"Output"=output, "Signficance Level"= Sig,"R Squared"=r))
 
+}
