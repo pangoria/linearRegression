@@ -25,13 +25,13 @@ into R, which has 32 observations and 11 variables.
 head(mtcars)
 ```
 
-To set up before implementation of 'linearReg' function:
+Set up before implementation of 'linearReg' function:
 
 Since we need a matrix of the explanatory variables, we will extract the 
-explanatory variables into a matrix and extract a response variable vector. In 
-this example, the explanatory variables of interest will be 'cyl' (number of 
-cylinder), and 'wt' (weight of vehicle) and the responding variable will be 
-'mpg' (Miles/(US) gallon).
+explanatory variables of the data set into a matrix and the response variable 
+as a vector. In this example, the explanatory variables of interest will be 
+'cyl' (number of cylinder), and 'wt' (weight of vehicle) and the responding 
+variable will be 'mpg' (Miles/(US) gallon).
 
 ```{r}
 ##Extract X-> select cyl (column 2) and wt (column 6) variables
@@ -41,7 +41,7 @@ X=as.matrix(mtcars[c("cyl", "wt")])
 y=as.vector(mtcars["mpg"])
 ```
 
-To use the function 'linearReg':
+Using the function 'linearReg':
 
 The model of interest is: mpg = B0 + B1*cyl + B2*wt
 
@@ -49,15 +49,18 @@ The model of interest is: mpg = B0 + B1*cyl + B2*wt
 linearReg(y,X)
 ```
 
+Comparison of the 'lm()' function summary to 'linearReg':
+
 The summary of the 'lm()' function is very similar to 'linearReg' with a 
 few exceptions:
 
-1. 'linearReg' includes 95% Confidence Intervals and the input is a matrix
-    and vector
+1. 'linearReg' includes 95% Confidence Intervals, Variance Inflation Factor
+    (VIF), and the input is a matrix and vector
+    
 2. 'lm()' includes Residual Standard Error and F-statistic information and 
     the input is a model formula
 
-In comparison to summary of the 'lm()' function in the stats package:
+The summary of the 'lm()' function in the stats package for comparison:
 
 ```{r}
 #original 'lm' function
@@ -68,22 +71,41 @@ summary(model)
 The values that are shared within both function's outputs appear to be executed 
 with the same amount of precision. The 'summary(lm())' function has the same 
 output values as 'linearReg' only the values of the former are rounded to the
-ten-thousandth decimal point.
+ten-thousandth decimal point. 
 
+Comparison of the VIF from 'linearReg' to the VIF of 'lm()' using 'vif' function
+in the car package:
+
+```{r}
+#VIF of 'linearReg'
+linearReg(y,X)$VIF
+
+#VIF of lm
+car::vif(model)
+```
+
+The above demonstrates that the 'linearReg' function accurately estimates the 
+variance inflation factors of the covariates in comparison to the 'vif' 
+function. 
 
 To compare the efficiency between 'linearReg' and 'summary(lm())':
 
 ```{r}
 system.time(linearReg(y,X))
-system.time(summary(model))
+system.time(summary(lm(mpg~cyl+wt, data=mtcars)))
 
 bench::mark(linearReg(y,X))
-bench::mark(summary(model))
+bench::mark(summary(lm(mpg~cyl+wt, data=mtcars)))
 ```
 
 The 'linearReg' function and 'summary(lm())' function appear to have similar 
-system time elapses indicating similar efficiency. 'bench::mark()' isn't the 
-best assessment of efficiency comparison because the 'linearReg' function runs
-the linear regression and provides output, while the 'lm()' runs the linear 
-regression and 'summary()' of the 'lm()' is just the output and therefore, the 
-'summary(lm())' is expected to be slightly more efficient.
+system time elapses indicating similar efficiency. Benchmarking the functions
+with 'bench::mark()' further justifies that the efficiency is comparable between
+the two functions.
+
+As stated above, 'linearReg' and 'summary(lm())' functions are very similar but
+have some differences in outputs which can potentially contribute to 
+small discrepancies when benchmarking the efficiency of these functions. Again,
+these differences include: 'linearReg' additionally outputs 95% confidence 
+intervals and variance inflation factors while 'summary(lm())' additionally
+outputs residual standard error and F-statistic information.

@@ -18,7 +18,8 @@ linearReg(y, X)
 \value{
 Linear regression model summary including residual quantiles,
 regression coefficients, standard error, t-statistics, p-values,
-95\% confidence intervals, R-squared and Adjusted R-squared.
+95\% confidence intervals, R-squared and Adjusted R-squared, and
+varaince inflation factors.
 }
 \description{
 This function loads in a matrix of explanatory variables and a response

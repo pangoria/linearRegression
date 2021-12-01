@@ -8,7 +8,8 @@
 #' @param X - matrix of explanatory variables included in the model (dim= n x p)
 #' @return Linear regression model summary including residual quantiles,
 #'         regression coefficients, standard error, t-statistics, p-values,
-#'         95% confidence intervals, R-squared and Adjusted R-squared.
+#'         95% confidence intervals, R-squared and Adjusted R-squared, and
+#'         varaince inflation factors.
 #'
 #' @examples
 #' linearReg(as.vector(mtcars["mpg"]),as.matrix(mtcars[c("cyl", "wt")]))
@@ -17,27 +18,34 @@
 linearReg<-function(y, X){
 
   ##ADD A 1 FOR THE INTERCEPTS TO BE A DESIGN MATRIX
-  X=cbind(rep(1, nrow(X)), X)
+  X= cbind(rep(1, nrow(X)), X)
   #rename column of 1's intercept
   colnames(X)[1] <- "Intercept"
 
   ##MAKE Y A COLUMN VECTOR
   y= as.matrix(y)
 
-  n=nrow(X)
-  p=ncol(X)
+  n= nrow(X)
+  p= ncol(X)
 
   ##FIND BETA ESTIMATES
-  beta_hats= solve(t(X)%*%X) %*% t(X)%*% y
+  #beta_hats= solve(t(X)%*%X) %*% t(X)%*% y
+
+  #cholesky decomposition to solve for betahats equation above + improve efficiency
+   tXX= crossprod(X)     # t(x) %*% x
+   tXY= crossprod(X,y)   # t(x) %*% y
+   R= chol(tXX)
+   z= forwardsolve(R,tXY,upper.tri=TRUE,transpose=TRUE) #
+   beta_hats= backsolve(R,z)
 
   ##RESIDUALS: (I-H)*y
-  H=X %*% solve(t(X)%*%X) %*% t(X)
+  H= X %*% solve(t(X)%*%X) %*% t(X)
   I= diag(nrow(X))
-  res=(I-H)%*%y
+  res= (I-H)%*%y
 
   #quantiles of residuals
-  resq=unname(stats::quantile(res))
-  resq=t(as.matrix(resq))
+  resq= unname(stats::quantile(res))
+  resq= t(as.matrix(resq))
   colnames(resq)<-c("minimun", "Q1-25%", "median", "Q3-75%", "maximum")
   rownames(resq)<-c("")
 
@@ -46,7 +54,7 @@ linearReg<-function(y, X){
 
   #var_hat of beta = sigma^2_hat(t(X)*X)^-1
   sigma2_hat= ( t(res) %*% res ) / (n-p)
-  var_beta=c(diag(solve(t(X) %*% X)) %*% sigma2_hat) #diag of var-cov matrix* sigma2
+  var_beta= c(diag(solve(t(X) %*% X)) %*% sigma2_hat) #diag of var-cov matrix* sigma2
 
   #se=sqrt(var)
   se= sqrt(var_beta)
@@ -68,11 +76,11 @@ linearReg<-function(y, X){
       x=""
     }
   }
-  signficance=sapply(p_value, sig_fun)
+  signficance= sapply(p_value, sig_fun)
 
   ##95% CI
   ci_95R= beta_hats + 1.96*se
-  ci_95L=beta_hats - 1.96*se
+  ci_95L= beta_hats - 1.96*se
 
   #R-SQUARED: 1-SSE/SSY
   SSE= as.numeric(( t(res) %*% res ))
@@ -83,24 +91,32 @@ linearReg<-function(y, X){
   #ADJUSTED R SQUARED
   adj_rsquared= 1-( (SSE/(n-p)) / (SSY/(n-1)) )
 
+  #VIF
+  #inverse correlation matrix of covariates
+  tZZ_inv= solve(cor(X[,2:ncol(X)]))
+  #diagonal is VIF values
+  VIF= t(as.matrix(diag(tZZ_inv)))
 
 
   ##REGRESSION MODEL OUTPUT
-  output=as.data.frame(cbind(beta_hats, se, t_stats, p_value, ci_95L, ci_95R))
-  output=cbind(output, signficance)
+  output= as.data.frame(cbind(beta_hats, se, t_stats, p_value, ci_95L, ci_95R))
+  output= cbind(output, signficance)
   colnames(output)<- c("Beta Estimate", "Std Error", "t-Statistic", "p-value","Lower 95% CI", "Upper 95% CI", "Signficance")
 
   #significance levels
   Sig= 'Signficance Level: p value < 0.05*, p value <0.01**'
-  Sig=as.matrix(Sig)
+  Sig= as.matrix(Sig)
   rownames(Sig)<-c("")
   colnames(Sig)<-c("")
 
   #r squared output
-  r=rbind(r_squared, adj_rsquared)
+  r= rbind(r_squared, adj_rsquared)
   rownames(r)<-c("R Squared", "Adjusted R Squared")
   colnames(r)<-c("")
 
-  return(list("Residuals"=resq,"Output"=output, "Signficance Level"= Sig,"R Squared"=r))
+  #multicollinearity (VIF)
+  colnames(VIF)<- colnames(X[,2:ncol(X)])
+  rownames(VIF)<-c("")
 
+  return(list("Residuals"=resq,"Output"=output, "Signficance Level"= Sig,"R Squared"=r, "VIF"=VIF))
 }
