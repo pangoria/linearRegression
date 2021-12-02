@@ -37,7 +37,7 @@ linearReg<-function(y, X){
    tXX= crossprod(X)     # t(x) %*% x
    tXY= crossprod(X,y)   # t(x) %*% y
    R= chol(tXX)
-   z= forwardsolve(R,tXY,upper.tri=TRUE,transpose=TRUE) #
+   z= forwardsolve(R,tXY,upper.tri=TRUE,transpose=TRUE)
    beta_hats= backsolve(R,z)
 
   ##RESIDUALS: (I-H)*y
@@ -111,7 +111,7 @@ linearReg<-function(y, X){
   rownames(Sig)<-c("")
   colnames(Sig)<-c("")
 
-  #r squared output
+  #R squared output
   r= rbind(r_squared, adj_rsquared)
   rownames(r)<-c("R Squared", "Adjusted R Squared")
   colnames(r)<-c("")
