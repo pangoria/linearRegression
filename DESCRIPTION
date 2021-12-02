@@ -14,7 +14,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    car,
+    bench
 VignetteBuilder: knitr
 Imports: 
         stats (>= 4.0.3)

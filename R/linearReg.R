@@ -9,10 +9,12 @@
 #' @return Linear regression model summary including residual quantiles,
 #'         regression coefficients, standard error, t-statistics, p-values,
 #'         95% confidence intervals, R-squared and Adjusted R-squared, and
-#'         varaince inflation factors.
+#'         variance inflation factors.
 #'
 #' @examples
 #' linearReg(as.vector(mtcars["mpg"]),as.matrix(mtcars[c("cyl", "wt")]))
+#'
+#' @import stats
 #'
 #' @export
 linearReg<-function(y, X){
