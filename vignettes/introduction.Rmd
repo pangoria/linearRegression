@@ -43,7 +43,7 @@ y=as.vector(mtcars["mpg"])
 
 Using the function 'linearReg':
 
-The model of interest is: mpg = B0 + B1*cyl + B2*wt
+The model of interest in this example is: mpg = B0 + B1*cyl + B2*wt
 
 ```{r}
 linearReg(y,X)
