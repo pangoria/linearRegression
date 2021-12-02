@@ -20,4 +20,4 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
         stats (>= 4.0.3)
-Config/testthat/edition: 3
+
