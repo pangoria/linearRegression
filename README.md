@@ -17,6 +17,5 @@ To install and use the 'linearReg' you must first install and load the package
 library:
 
 ```{r}
-install.packages("linearRegression")
-library(linearRegression)
+devtools::install_git("pangoria/linearRegression")
 ```
