@@ -25,7 +25,7 @@ into R, which has 32 observations and 11 variables.
 head(mtcars)
 ```
 
-Set up before implementation of 'linearReg' function:
+### Set up before implementation of 'linearReg' function:
 
 Since we need a matrix of the explanatory variables, we will extract the 
 explanatory variables of the data set into a matrix and the response variable 
@@ -41,7 +41,7 @@ X=as.matrix(mtcars[c("cyl", "wt")])
 y=as.vector(mtcars["mpg"])
 ```
 
-Using the function 'linearReg':
+### Using the function 'linearReg':
 
 The model of interest in this example is: mpg = B0 + B1*cyl + B2*wt
 
@@ -49,7 +49,7 @@ The model of interest in this example is: mpg = B0 + B1*cyl + B2*wt
 linearReg(y,X)
 ```
 
-Comparison of the 'lm()' function summary to 'linearReg':
+### Comparison of the 'lm()' function summary to 'linearReg':
 
 The summary of the 'lm()' function is very similar to 'linearReg' with a 
 few exceptions:
@@ -73,8 +73,7 @@ with the same amount of precision. The 'summary(lm())' function has the same
 output values as 'linearReg' only the values of the former are rounded to the
 ten-thousandth decimal point. 
 
-Comparison of the VIF from 'linearReg' to the VIF of 'lm()' using 'vif' function
-in the car package:
+### Comparison of the VIF from 'linearReg' to the VIF of 'lm()' using 'vif' function in the car package:
 
 ```{r}
 #VIF of 'linearReg'
@@ -88,7 +87,7 @@ The above demonstrates that the 'linearReg' function accurately estimates the
 variance inflation factors of the covariates in comparison to the 'vif' 
 function. 
 
-To compare the efficiency between 'linearReg' and 'summary(lm())':
+### To compare the efficiency between 'linearReg' and 'summary(lm())':
 
 ```{r}
 system.time(linearReg(y,X))
